@@ -126,5 +126,5 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus d'informatio
 ---
 
 <p align="center">
-  Créé avec ❤️ par [Votre Nom]
+  Créé avec ❤️ par Guillaume Dedeurwaerder /Zanko19
 </p>
