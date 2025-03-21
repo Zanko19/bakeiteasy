@@ -3,11 +3,18 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useIngredientsSearch } from '@/hooks/useSpoonacular';
+import { useTranslatedIngredientsSearch } from '@/hooks/useTranslatedSearch';
 
 export default function SpoonacularTestPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { ingredients, loading, error, searchIngredients } = useIngredientsSearch();
+  const { 
+    ingredients, 
+    loading, 
+    error, 
+    searchIngredients,
+    originalQuery,
+    translatedQuery
+  } = useTranslatedIngredientsSearch();
   
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +31,7 @@ export default function SpoonacularTestPage() {
             <Link href="/" className="text-white hover:text-amber-200 mr-4">
               ← Accueil
             </Link>
-            <h1 className="text-2xl font-bold">Test API Spoonacular</h1>
+            <h1 className="text-2xl font-bold">Test API Spoonacular avec Traduction</h1>
           </div>
         </div>
       </header>
@@ -39,7 +46,7 @@ export default function SpoonacularTestPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Rechercher un ingrédient (en anglais)..."
+                placeholder="Rechercher un ingrédient (en français)..."
                 className="flex-grow border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
               <button
@@ -55,6 +62,13 @@ export default function SpoonacularTestPage() {
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
               {error}
+            </div>
+          )}
+          
+          {translatedQuery && originalQuery && (
+            <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded mb-6">
+              <p><strong>Terme recherché :</strong> &quot;{originalQuery}&quot;</p>
+              <p><strong>Traduit en anglais :</strong> &quot;{translatedQuery}&quot;</p>
             </div>
           )}
           
@@ -84,16 +98,19 @@ export default function SpoonacularTestPage() {
         </section>
         
         <section className="mb-10">
-          <h3 className="text-xl font-semibold mb-4">Comment utiliser l&apos;API</h3>
+          <h3 className="text-xl font-semibold mb-4">Comment utiliser l&apos;API avec traduction</h3>
           <div className="bg-gray-50 p-6 rounded-lg">
             <p className="mb-4">
-              Pour utiliser l&apos;API Spoonacular dans votre application, vous pouvez utiliser les hooks que nous avons créés:
+              Vous pouvez désormais rechercher des ingrédients en français ! L&apos;application :
             </p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li><code className="bg-gray-100 px-1 py-0.5 rounded">useIngredientsSearch</code> - Pour rechercher des ingrédients</li>
-              <li><code className="bg-gray-100 px-1 py-0.5 rounded">useRecipeSearch</code> - Pour rechercher des recettes</li>
-              <li><code className="bg-gray-100 px-1 py-0.5 rounded">useRecipeDetails</code> - Pour obtenir les détails d&apos;une recette spécifique</li>
-            </ul>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>Traduit automatiquement votre recherche en anglais</li>
+              <li>Envoie la requête traduite à Spoonacular</li>
+              <li>Traduit les résultats du anglais vers le français</li>
+            </ol>
+            <p className="mt-4 text-sm text-gray-600">
+              Exemples : essayez de chercher &quot;farine&quot;, &quot;lait&quot;, &quot;oeufs&quot;, etc.
+            </p>
           </div>
         </section>
       </main>
