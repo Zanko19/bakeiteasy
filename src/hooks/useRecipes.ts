@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Recipe } from '@/types/recipe';
 import { recipes as mockRecipes } from '@/data/recipes';

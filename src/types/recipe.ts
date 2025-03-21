@@ -7,4 +7,5 @@ export interface Recipe {
   cookingTime: number;
   difficulty: string;
   imageUrl: string;
+  rating?: number; // Note sur 5
 }

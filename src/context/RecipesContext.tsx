@@ -1,5 +1,7 @@
+'use client';
+
 // src/context/RecipesContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { Recipe } from '@/types/recipe';
 import { useRecipes } from '@/hooks/useRecipes';
 
@@ -16,14 +18,21 @@ const RecipesContext = createContext<RecipesContextType | undefined>(undefined);
 
 export function RecipesProvider({ children }: { children: ReactNode }) {
   const { recipes, loading, error } = useRecipes();
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    // Récupérer les favoris du localStorage au chargement
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  // Chargement des favoris depuis localStorage au démarrage
+  useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('favorites');
-      return saved ? JSON.parse(saved) : [];
+      const saved = localStorage.getItem('bakeiteasy_favorites');
+      if (saved) {
+        try {
+          setFavorites(JSON.parse(saved));
+        } catch (e) {
+          console.error('Erreur lors du chargement des favoris:', e);
+        }
+      }
     }
-    return [];
-  });
+  }, []);
 
   const toggleFavorite = (id: string) => {
     const newFavorites = favorites.includes(id)
@@ -31,16 +40,24 @@ export function RecipesProvider({ children }: { children: ReactNode }) {
       : [...favorites, id];
     
     setFavorites(newFavorites);
+    
     // Sauvegarder dans localStorage
     if (typeof window !== 'undefined') {
-      localStorage.setItem('favorites', JSON.stringify(newFavorites));
+      localStorage.setItem('bakeiteasy_favorites', JSON.stringify(newFavorites));
     }
   };
 
   const isFavorite = (id: string) => favorites.includes(id);
 
   return (
-    <RecipesContext.Provider value={{ recipes, favorites, loading, error, toggleFavorite, isFavorite }}>
+    <RecipesContext.Provider value={{ 
+      recipes, 
+      favorites, 
+      loading, 
+      error, 
+      toggleFavorite, 
+      isFavorite 
+    }}>
       {children}
     </RecipesContext.Provider>
   );

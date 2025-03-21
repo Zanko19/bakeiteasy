@@ -22,7 +22,8 @@ export const recipes: Recipe[] = [
     preparationTime: 15,
     cookingTime: 25,
     difficulty: 'Facile',
-    imageUrl: '/images/choc.jpg'
+    imageUrl: '/images/choc.jpg',
+    rating: 4.5
   },
   {
     id: '2',
@@ -47,6 +48,7 @@ export const recipes: Recipe[] = [
     preparationTime: 20,
     cookingTime: 30,
     difficulty: 'Facile',
-    imageUrl: '/images/tarte-pommes.jpg'
+    imageUrl: '/images/tarte-pommes.jpg',
+    rating: 4
   }
 ];

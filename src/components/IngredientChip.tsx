@@ -1,3 +1,5 @@
+'use client';
+
 // src/components/IngredientChip.tsx
 import React from 'react';
 
