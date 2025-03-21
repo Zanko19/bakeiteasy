@@ -19,6 +19,19 @@ export default function Home() {
               Mes ingrédients
             </Link>
             <Link 
+              href="/spoonacular" 
+              className="bg-amber-700 hover:bg-amber-800 px-4 py-2 rounded-lg text-white transition"
+            >
+              API Spoonacular
+            </Link>
+            <Link 
+              href="/test-api" 
+              className="bg-amber-700 hover:bg-amber-800 px-4 py-2 rounded-lg text-white transition flex items-center"
+            >
+              <span className="mr-2">🔍</span>
+              Diagnostic API
+            </Link>
+            <Link 
               href="/search" 
               className="bg-amber-700 hover:bg-amber-800 px-4 py-2 rounded-lg text-white transition"
             >
